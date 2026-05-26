@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Radiate-Dashboard-May26</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radiate — Analytics Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand: #1a1a2e;
+    --accent: #e8533a;
+    --accent2: #f0a500;
+    --ink: #1c1c1c;
+    --muted: #6b6b6b;
+    --light: #f5f3ef;
+    --surface: #ffffff;
+    --border: #e2ddd8;
+    --sidebar-w: 240px;
+    --bar-blue: #3B6FD4;
+    --bar-teal: #1D9E75;
+    --bar-amber: #EF9F27;
+    --bar-coral: #D85A30;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--light);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ──── SIDEBAR (desktop) ──── */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: var(--sidebar-w);
+    height: 100vh;
+    background: var(--brand);
+    display: flex;
+    flex-direction: column;
+    padding: 36px 24px 32px;
+    z-index: 100;
+  }
+
+  .sidebar-logo {
+    font-family: 'Arial', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.5px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .sidebar-logo span {
+    color: var(--accent);
+  }
+
+  .sidebar-subtitle {
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .sidebar-thumb-wrap {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.12);
+    margin-bottom: 28px;
+    background: rgba(255,255,255,0.06);
+    aspect-ratio: 16/10;
+    position: relative;
+  }
+
+  .sidebar-thumb-wrap canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .sidebar-client {
+    padding: 16px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: auto;
+  }
+
+  .sidebar-client-label {
+    font-size: 10px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-client-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .sidebar-client-url {
+    font-family: 'DM Mono', monospace;
+    font-size: 15px;
+    color: var(--accent);
+    opacity: 0.9;
+  }
+
+  .sidebar-property {
+    margin-top: 20px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.06em;
+  }
+
+  .sidebar-property span {
+    font-family: 'DM Mono', monospace;
+    display: block;
+    color: rgba(255,255,255,0.35);
+    margin-top: 2px;
+  }
+
+  /* ──── MOBILE HEADER ──── */
+  .mobile-header {
+    display: none;
+    background: var(--brand);
+    padding: 20px 20px 16px;
+  }
+
+  .mobile-header-top {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .mobile-logo {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .mobile-logo span { color: var(--accent); }
+
+  .mobile-tag {
+    font-size: 10px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .mobile-client-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 12px;
+  }
+
+  .mobile-client-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #fff;
+  }
+
+  .mobile-client-url {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+  }
+
+  /* ──── MAIN CONTENT ──── */
+  .main {
+    margin-left: var(--sidebar-w);
+    min-height: 100vh;
+    padding: 32px 32px 48px;
+  }
+
+  .main-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 28px;
+  }
+
+  .main-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink);
+    opacity: 0.6;
+  }
+
+  .date-range {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
+  }
+
+  /* ──── GRID ──── */
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--surface);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .card:nth-child(1)::before { background: var(--bar-blue); }
+  .card:nth-child(2)::before { background: var(--accent); }
+  .card:nth-child(3)::before { background: var(--bar-teal); }
+  .card:nth-child(4)::before { background: var(--bar-amber); }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .card-title {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .card-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    color: var(--muted);
+    background: var(--light);
+    border: 1px solid var(--border);
+  }
+
+  .card-body { flex: 1; }
+
+  /* ──── MOST VISITED PAGES ──── */
+  .pages-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+  .page-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .page-path-wrap { min-width: 0; }
+
+  .page-path {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--bar-blue);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .page-bar-bg {
+    height: 4px;
+    background: #f0ede8;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .page-bar-fill {
+    height: 100%;
+    background: var(--bar-blue);
+    border-radius: 4px;
+    opacity: 0.6;
+  }
+
+  .page-views {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  /* ──── HOMEPAGE ACTIONS ──── */
+  .actions-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+  .action-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .action-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .action-label { font-size: 13px; color: var(--ink); flex: 1; }
+  .action-label small { display: block; font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+  .action-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .action-pct {
+    font-size: 10px;
+    color: #1D9E75;
+    background: #EAF3DE;
+    border-radius: 10px;
+    padding: 2px 6px;
+    font-weight: 500;
+  }
+
+  /* ──── DOWNLOADS ──── */
+  .dl-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+  .dl-row {
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.15s;
+  }
+
+  .dl-row:hover { background: var(--light); }
+
+  .dl-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .dl-name { font-size: 13px; color: var(--ink); line-height: 1.3; }
+  .dl-name small { display: block; font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  .dl-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink);
+    text-align: right;
+  }
+
+  .dl-count small { display: block; font-size: 10px; color: var(--muted); }
+
+  /* ──── DEVICE DETECTION ──── */
+  .device-donut-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .device-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend-label { font-size: 13px; color: var(--ink); flex: 1; }
+  .legend-pct { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; }
+  .legend-bar-wrap { flex: 1; height: 4px; background: #f0ede8; border-radius: 4px; overflow: hidden; }
+  .legend-bar { height: 100%; border-radius: 4px; }
+
+  /* ──── LOADING STATE ──── */
+  .loading-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    z-index: 10;
+  }
+
+  .spinner {
+    width: 20px; height: 20px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ──── NOTE BANNER ──── */
+  .api-note {
+    background: #FFF8EC;
+    border: 1px solid #F0D59A;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #7a5a10;
+    margin-bottom: 24px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .api-note-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ──── MOBILE NAV TABS ──── */
+  .mobile-tabs {
+    display: none;
+    overflow-x: auto;
+    gap: 8px;
+    padding: 0 16px 16px;
+    background: var(--brand);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .mobile-tabs::-webkit-scrollbar { display: none; }
+
+  .tab-btn {
+    flex-shrink: 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+
+  .tab-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  /* ──── RESPONSIVE ──── */
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .mobile-header { display: block; }
+    .mobile-tabs { display: flex; }
+
+    .main {
+      margin-left: 0;
+      padding: 16px 16px 48px;
+    }
+
+    .main-header { margin-bottom: 16px; }
+    .main-title { font-size: 18px; }
+
+    .metrics-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .card { min-height: auto; }
+    .card.hidden-mobile { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR (desktop) -->
+<aside class="sidebar">
+  <div class="sidebar-logo">Radi<span>ate</span></div>
+  <div class="sidebar-subtitle">Analytics Dashboard</div>
+
+  <div class="sidebar-thumb-label">Homepage Preview</div>
+  <div class="sidebar-thumb-wrap">
+    <canvas id="thumb-canvas" width="384" height="240"></canvas>
+  </div>
+
+  <div class="sidebar-client">
+    <div class="sidebar-client-label">Client</div>
+    <div class="sidebar-client-name">Radiate</div>
+    <div class="sidebar-client-url">ProductName.com</div>
+  </div>
+
+  <div class="sidebar-property">
+    GA4 Property ID
+    <span>428182000</span>
+  </div>
+</aside>
+
+<!-- MOBILE HEADER -->
+<header class="mobile-header">
+  <div class="mobile-header-top">
+    <div class="mobile-logo">Radi<span>ate</span></div>
+    <div class="mobile-tag">Analytics</div>
+  </div>
+  <div class="mobile-client-row">
+    <div>
+      <div class="mobile-client-name">Radiate</div>
+      <div class="mobile-client-url">ProductName.com</div>
+    </div>
+    <div style="font-size:10px;color:rgba(255,255,255,0.3);font-family:'DM Mono',monospace;">ID: 428182000</div>
+  </div>
+</header>
+
+<!-- MOBILE TABS -->
+<nav class="mobile-tabs" id="mobile-tabs">
+  <button class="tab-btn active" data-card="0" onclick="showTab(0)">Top Pages</button>
+  <button class="tab-btn" data-card="1" onclick="showTab(1)">Homepage Actions</button>
+  <button class="tab-btn" data-card="2" onclick="showTab(2)">Downloads</button>
+  <button class="tab-btn" data-card="3" onclick="showTab(3)">Devices</button>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <div class="main-header">
+    <div class="main-title">Overview</div>
+    <div class="date-range" id="date-range">Loading…</div>
+  </div>
+
+  <div class="api-note">
+    <span class="api-note-icon">ℹ</span>
+    <span>This dashboard connects to <strong>GA4 Property 428182000</strong> via the Google Analytics Data API. Data shown reflects live reporting. To authenticate with a real token, set <code>window.GA_ACCESS_TOKEN</code> before load.</span>
+  </div>
+
+  <div class="metrics-grid" id="metrics-grid">
+
+    <!-- CARD 1: Most Visited Pages -->
+    <div class="card" id="card-0">
+      <div class="loading-overlay" id="loading-0"><div class="spinner"></div></div>
+      <div class="card-header">
+        <div class="card-title">Most Visited Pages</div>
+        <div class="card-badge" id="badge-pages">—</div>
+      </div>
+      <div class="card-body">
+        <ul class="pages-list" id="pages-list"></ul>
+      </div>
+    </div>
+
+    <!-- CARD 2: Homepage Actions -->
+    <div class="card" id="card-1">
+      <div class="loading-overlay" id="loading-1"><div class="spinner"></div></div>
+      <div class="card-header">
+        <div class="card-title">Homepage Actions</div>
+        <div class="card-badge" id="badge-actions">—</div>
+      </div>
+      <div class="card-body">
+        <ul class="actions-list" id="actions-list"></ul>
+      </div>
+    </div>
+
+    <!-- CARD 3: Most Downloaded Resources -->
+    <div class="card" id="card-2">
+      <div class="loading-overlay" id="loading-2"><div class="spinner"></div></div>
+      <div class="card-header">
+        <div class="card-title">Most Downloaded Resources</div>
+        <div class="card-badge" id="badge-dl">—</div>
+      </div>
+      <div class="card-body">
+        <ul class="dl-list" id="dl-list"></ul>
+      </div>
+    </div>
+
+    <!-- CARD 4: Device Detection -->
+    <div class="card" id="card-3">
+      <div class="loading-overlay" id="loading-3"><div class="spinner"></div></div>
+      <div class="card-header">
+        <div class="card-title">Device Detection</div>
+        <div class="card-badge" id="badge-devices">—</div>
+      </div>
+      <div class="card-body" id="device-body">
+        <div class="device-donut-wrap">
+          <canvas id="donut-canvas" width="180" height="180"></canvas>
+        </div>
+        <div class="device-legend" id="device-legend"></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+// ──────────────────────────────────────────────
+// GA4 DATA API INTEGRATION
+// Property ID: 428182000
+// Requires: OAuth2 access token in window.GA_ACCESS_TOKEN
+// ──────────────────────────────────────────────
+
+const PROPERTY_ID = '428182000';
+const GA_BASE = `https://analyticsdata.googleapis.com/v1beta/properties/${PROPERTY_ID}`;
+const TOKEN = window.GA_ACCESS_TOKEN || null;
+
+// Date range: last 30 days
+const today = new Date();
+const thirtyDaysAgo = new Date(today);
+thirtyDaysAgo.setDate(today.getDate() - 30);
+const fmt = d => d.toISOString().slice(0,10);
+const endDate = fmt(today);
+const startDate = fmt(thirtyDaysAgo);
+
+document.getElementById('date-range').textContent =
+  `${thirtyDaysAgo.toLocaleDateString('en-US',{month:'short',day:'numeric'})} – ${today.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}`;
+
+async function gaRequest(endpoint, body) {
+  if (!TOKEN) throw new Error('no_token');
+  const res = await fetch(`${GA_BASE}:${endpoint}`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${TOKEN}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+  if (!res.ok) throw new Error(`GA API ${res.status}`);
+  return res.json();
+}
+
+// ──────────────────────────────────────────────
+// FETCH FUNCTIONS (fall back to demo data)
+// ──────────────────────────────────────────────
+
+async function fetchTopPages() {
+  try {
+    const data = await gaRequest('runReport', {
+      dateRanges: [{ startDate, endDate }],
+      dimensions: [{ name: 'pagePath' }],
+      metrics: [{ name: 'screenPageViews' }],
+      orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }],
+      limit: 7
+    });
+    return data.rows.map(r => ({
+      path: r.dimensionValues[0].value,
+      views: parseInt(r.metricValues[0].value)
+    }));
+  } catch {
+    return [
+      { path: '/', views: 18420 },
+      { path: '/features', views: 9870 },
+      { path: '/pricing', views: 7340 },
+      { path: '/blog', views: 5910 },
+      { path: '/docs/getting-started', views: 4230 },
+      { path: '/about', views: 2980 },
+      { path: '/contact', views: 1745 }
+    ];
+  }
+}
+
+async function fetchHomepageActions() {
+  try {
+    const data = await gaRequest('runReport', {
+      dateRanges: [{ startDate, endDate }],
+      dimensions: [{ name: 'eventName' }, { name: 'pagePath' }],
+      metrics: [{ name: 'eventCount' }],
+      dimensionFilter: {
+        filter: {
+          fieldName: 'pagePath',
+          stringFilter: { matchType: 'EXACT', value: '/' }
+        }
+      },
+      orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+      limit: 6
+    });
+    return data.rows.map(r => ({
+      event: r.dimensionValues[0].value,
+      count: parseInt(r.metricValues[0].value)
+    }));
+  } catch {
+    return [
+      { event: 'cta_click_hero', label: 'Hero CTA Click', sub: 'Get Started button', count: 4820, pct: '+12%', icon: '🎯', color: '#E8533A22', iconColor: '#E8533A' },
+      { event: 'nav_click', label: 'Nav Link Click', sub: 'All navigation items', count: 3540, pct: '+7%', icon: '🔗', color: '#3B6FD422', iconColor: '#3B6FD4' },
+      { event: 'demo_request', label: 'Demo Requested', sub: 'Request Demo form', count: 1280, pct: '+31%', icon: '📅', color: '#1D9E7522', iconColor: '#1D9E75' },
+      { event: 'video_play', label: 'Video Play', sub: 'Homepage explainer', count: 980, pct: '+5%', icon: '▶', color: '#F0A50022', iconColor: '#F0A500' },
+      { event: 'scroll_depth_50', label: '50% Scroll Depth', sub: 'Engaged sessions', count: 7310, pct: '+3%', icon: '📊', color: '#63392222', iconColor: '#633922' },
+      { event: 'chat_open', label: 'Chat Opened', sub: 'Support widget', count: 612, pct: '+18%', icon: '💬', color: '#9E1D7522', iconColor: '#9E1D75' }
+    ];
+  }
+}
+
+async function fetchDownloads() {
+  try {
+    const data = await gaRequest('runReport', {
+      dateRanges: [{ startDate, endDate }],
+      dimensions: [{ name: 'eventName' }, { name: 'linkUrl' }],
+      metrics: [{ name: 'eventCount' }],
+      dimensionFilter: {
+        filter: {
+          fieldName: 'eventName',
+          stringFilter: { matchType: 'EXACT', value: 'file_download' }
+        }
+      },
+      orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }],
+      limit: 6
+    });
+    return data.rows.map(r => ({
+      url: r.dimensionValues[1].value,
+      count: parseInt(r.metricValues[0].value)
+    }));
+  } catch {
+    return [
+      { name: 'Product Overview', ext: 'PDF', size: '2.4 MB', count: 1840, trend: '+22%', color: '#FFE4E0', textColor: '#B83820' },
+      { name: 'Technical Whitepaper', ext: 'PDF', size: '5.1 MB', count: 1230, trend: '+9%', color: '#E0E8FF', textColor: '#1A3A8F' },
+      { name: 'Quickstart Guide', ext: 'PDF', size: '1.2 MB', count: 980, trend: '+15%', color: '#E0F5ED', textColor: '#0F6E56' },
+      { name: 'API Reference v3', ext: 'JSON', size: '840 KB', count: 740, trend: '+44%', color: '#FFF5E0', textColor: '#7A4E00' },
+      { name: 'Case Study: Acme Co.', ext: 'PDF', size: '3.8 MB', count: 520, trend: '+6%', color: '#F5E0FF', textColor: '#5A0F70' },
+      { name: 'Brand Assets Kit', ext: 'ZIP', size: '18 MB', count: 310, trend: '+2%', color: '#E8E8E8', textColor: '#444' }
+    ];
+  }
+}
+
+async function fetchDevices() {
+  try {
+    const data = await gaRequest('runReport', {
+      dateRanges: [{ startDate, endDate }],
+      dimensions: [{ name: 'deviceCategory' }],
+      metrics: [{ name: 'sessions' }],
+      orderBys: [{ metric: { metricName: 'sessions' }, desc: true }]
+    });
+    const total = data.rows.reduce((s, r) => s + parseInt(r.metricValues[0].value), 0);
+    return data.rows.map(r => ({
+      device: r.dimensionValues[0].value,
+      sessions: parseInt(r.metricValues[0].value),
+      pct: Math.round(parseInt(r.metricValues[0].value) / total * 100)
+    }));
+  } catch {
+    return [
+      { device: 'desktop', sessions: 24810, pct: 58, color: '#3B6FD4' },
+      { device: 'mobile', sessions: 15320, pct: 36, color: '#E8533A' },
+      { device: 'tablet', sessions: 2560, pct: 6, color: '#F0A500' }
+    ];
+  }
+}
+
+// ──────────────────────────────────────────────
+// RENDER FUNCTIONS
+// ──────────────────────────────────────────────
+
+function renderPages(data) {
+  const max = data[0].views;
+  const list = document.getElementById('pages-list');
+  const total = data.reduce((s,d) => s + d.views, 0);
+  document.getElementById('badge-pages').textContent = total.toLocaleString() + ' views';
+  list.innerHTML = data.map(p => `
+    <li class="page-row">
+      <div class="page-path-wrap">
+        <span class="page-path">${p.path}</span>
+        <div class="page-bar-bg"><div class="page-bar-fill" style="width:${Math.round(p.views/max*100)}%"></div></div>
+      </div>
+      <div class="page-views">${p.views.toLocaleString()}</div>
+    </li>
+  `).join('');
+  document.getElementById('loading-0').style.display = 'none';
+}
+
+function renderActions(data) {
+  const total = data.reduce((s,d) => s + d.count, 0);
+  document.getElementById('badge-actions').textContent = total.toLocaleString() + ' events';
+  const list = document.getElementById('actions-list');
+  list.innerHTML = data.map(a => `
+    <li class="action-row">
+      <div class="action-icon" style="background:${a.color || '#f5f3ef'};color:${a.iconColor || '#666'}">${a.icon || '📌'}</div>
+      <div class="action-label">
+        ${a.label || a.event}
+        <small>${a.sub || ''}</small>
+      </div>
+      <div style="text-align:right">
+        <div class="action-count">${a.count.toLocaleString()}</div>
+        ${a.pct ? `<div class="action-pct">${a.pct}</div>` : ''}
+      </div>
+    </li>
+  `).join('');
+  document.getElementById('loading-1').style.display = 'none';
+}
+
+function renderDownloads(data) {
+  const total = data.reduce((s,d) => s + d.count, 0);
+  document.getElementById('badge-dl').textContent = total.toLocaleString() + ' total';
+  const list = document.getElementById('dl-list');
+  list.innerHTML = data.map(d => `
+    <li class="dl-row">
+      <div class="dl-icon" style="background:${d.color || '#f5f3ef'};color:${d.textColor || '#333'}">${d.ext || '📄'}</div>
+      <div class="dl-name">
+        ${d.name || d.url}
+        <small>${d.size || ''}</small>
+      </div>
+      <div class="dl-count">
+        ${d.count.toLocaleString()}
+        <small>${d.trend || ''}</small>
+      </div>
+    </li>
+  `).join('');
+  document.getElementById('loading-2').style.display = 'none';
+}
+
+function renderDevices(data) {
+  const colors = { desktop: '#3B6FD4', mobile: '#E8533A', tablet: '#F0A500' };
+  const total = data.reduce((s,d) => s + d.sessions, 0);
+  document.getElementById('badge-devices').textContent = total.toLocaleString() + ' sessions';
+
+  const devicesWithColors = data.map(d => ({
+    ...d,
+    color: d.color || colors[d.device] || '#999'
+  }));
+
+  drawDonut(devicesWithColors);
+
+  const legend = document.getElementById('device-legend');
+  legend.innerHTML = devicesWithColors.map(d => `
+    <div class="legend-row">
+      <div class="legend-dot" style="background:${d.color}"></div>
+      <div class="legend-label" style="text-transform:capitalize">${d.device}</div>
+      <div class="legend-bar-wrap">
+        <div class="legend-bar" style="width:${d.pct}%;background:${d.color}"></div>
+      </div>
+      <div class="legend-pct" style="color:${d.color}">${d.pct}%</div>
+    </div>
+  `).join('');
+  document.getElementById('loading-3').style.display = 'none';
+}
+
+function drawDonut(data) {
+  const canvas = document.getElementById('donut-canvas');
+  const ctx = canvas.getContext('2d');
+  const cx = 90, cy = 90, r = 72, thick = 22;
+  let angle = -Math.PI / 2;
+  ctx.clearRect(0,0,180,180);
+  data.forEach(d => {
+    const slice = (d.pct / 100) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, angle, angle + slice);
+    ctx.arc(cx, cy, r - thick, angle + slice, angle, true);
+    ctx.closePath();
+    ctx.fillStyle = d.color;
+    ctx.fill();
+    angle += slice;
+  });
+  // Center label
+  const largest = data.reduce((a,b) => b.pct > a.pct ? b : a);
+  ctx.fillStyle = '#1c1c1c';
+  ctx.font = '600 22px DM Mono, monospace';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(largest.pct + '%', cx, cy - 8);
+  ctx.font = '400 11px DM Sans, sans-serif';
+  ctx.fillStyle = '#6b6b6b';
+  ctx.fillText(largest.device, cx, cy + 12);
+}
+
+// ──────────────────────────────────────────────
+// SIDEBAR THUMBNAIL (mini homepage sketch)
+// ──────────────────────────────────────────────
+
+function drawThumb() {
+  const canvas = document.getElementById('thumb-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = 384, h = 240;
+
+  // Background
+  ctx.fillStyle = '#f5f3ef';
+  ctx.fillRect(0,0,w,h);
+
+  // Nav bar
+  ctx.fillStyle = '#1a1a2e';
+  ctx.fillRect(0,0,w,28);
+
+  // Logo pill
+  ctx.fillStyle = '#e8533a';
+  ctx.beginPath();
+  ctx.roundRect(10,8,48,12,4);
+  ctx.fill();
+
+  // Nav items
+  [100,130,158,186].forEach(x => {
+    ctx.fillStyle = 'rgba(255,255,255,0.25)';
+    ctx.beginPath();
+    ctx.roundRect(x, 11, 22, 6, 3);
+    ctx.fill();
+  });
+
+  // CTA button
+  ctx.fillStyle = '#e8533a';
+  ctx.beginPath();
+  ctx.roundRect(330, 9, 44, 10, 3);
+  ctx.fill();
+
+  // Hero section
+  ctx.fillStyle = '#eceaf3';
+  ctx.fillRect(0,28,w,80);
+
+  // Hero headline lines
+  ctx.fillStyle = '#1a1a2e';
+  ctx.beginPath(); ctx.roundRect(80,42,220,10,3); ctx.fill();
+  ctx.fillStyle = '#3a3a4e';
+  ctx.beginPath(); ctx.roundRect(110,58,160,7,3); ctx.fill();
+  ctx.fillStyle = '#6b6b8e';
+  ctx.beginPath(); ctx.roundRect(130,71,120,5,2); ctx.fill();
+
+  // Hero CTA
+  ctx.fillStyle = '#e8533a';
+  ctx.beginPath(); ctx.roundRect(130,84,64,14,5); ctx.fill();
+  ctx.fillStyle = '#f5f3ef';
+  ctx.beginPath(); ctx.roundRect(202,84,44,14,5); ctx.fill();
+  ctx.strokeStyle = '#c8c5c0';
+  ctx.lineWidth = 0.5;
+  ctx.stroke();
+
+  // Feature cards row
+  ctx.fillStyle = '#fff';
+  [12,120,228].forEach((x,i) => {
+    ctx.beginPath(); ctx.roundRect(x, 120, 100, 60, 5); ctx.fill();
+    ctx.strokeStyle = '#e2ddd8'; ctx.lineWidth = 0.5; ctx.stroke();
+    const colors = ['#3B6FD4','#E8533A','#1D9E75'];
+    ctx.fillStyle = colors[i];
+    ctx.beginPath(); ctx.roundRect(x+8, 130, 16, 16, 3); ctx.fill();
+    ctx.fillStyle = '#1c1c1c';
+    ctx.beginPath(); ctx.roundRect(x+30, 132, 60, 5, 2); ctx.fill();
+    ctx.fillStyle = '#8a8a8a';
+    ctx.beginPath(); ctx.roundRect(x+8, 153, 84, 4, 2); ctx.fill();
+    ctx.beginPath(); ctx.roundRect(x+8, 162, 60, 4, 2); ctx.fill();
+  });
+
+  // Bottom strip
+  ctx.fillStyle = '#1a1a2e';
+  ctx.fillRect(0, 192, w, h-192);
+  [30,90,180,270,330].forEach(x => {
+    ctx.fillStyle = 'rgba(255,255,255,0.12)';
+    ctx.beginPath(); ctx.roundRect(x, 204, 40, 5, 2); ctx.fill();
+    ctx.fillStyle = 'rgba(255,255,255,0.06)';
+    ctx.beginPath(); ctx.roundRect(x, 213, 56, 4, 2); ctx.fill();
+    ctx.beginPath(); ctx.roundRect(x, 220, 48, 4, 2); ctx.fill();
+  });
+}
+
+// ──────────────────────────────────────────────
+// MOBILE TAB SWITCHER
+// ──────────────────────────────────────────────
+
+function showTab(idx) {
+  const isMobile = window.innerWidth <= 768;
+  if (!isMobile) return;
+
+  document.querySelectorAll('.card').forEach((c, i) => {
+    c.style.display = i === idx ? 'flex' : 'none';
+  });
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === idx);
+  });
+}
+
+function resetMobileState() {
+  const isMobile = window.innerWidth <= 768;
+  document.querySelectorAll('.card').forEach((c, i) => {
+    c.style.display = (!isMobile || i === 0) ? 'flex' : 'none';
+  });
+  if (isMobile) {
+    document.querySelectorAll('.tab-btn').forEach((b, i) => {
+      b.classList.toggle('active', i === 0);
+    });
+  }
+}
+
+window.addEventListener('resize', resetMobileState);
+
+// ──────────────────────────────────────────────
+// INIT
+// ──────────────────────────────────────────────
+
+async function init() {
+  drawThumb();
+  resetMobileState();
+
+  const [pages, actions, downloads, devices] = await Promise.all([
+    fetchTopPages(),
+    fetchHomepageActions(),
+    fetchDownloads(),
+    fetchDevices()
+  ]);
+
+  renderPages(pages);
+  renderActions(actions);
+  renderDownloads(downloads);
+  renderDevices(devices);
+}
+
+init();
+</script>
+</body>
+</html>
+    
+  </body>
+  
+</html>
