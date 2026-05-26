@@ -14,7 +14,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Radiate — Analytics Dashboard</title>
+<title>Radiate — Analytics Dashboard from Omnicom Production</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -23,11 +23,11 @@
     --accent: #e8533a;
     --accent2: #f0a500;
     --ink: #1c1c1c;
-    --muted: #6b6b6b;
+    --muted: #555555;
     --light: #f5f3ef;
     --surface: #ffffff;
     --border: #e2ddd8;
-    --sidebar-w: 240px;
+    --sidebar-w: 250px;
     --bar-blue: #3B6FD4;
     --bar-teal: #1D9E75;
     --bar-amber: #EF9F27;
@@ -66,19 +66,28 @@
     margin-bottom: 4px;
   }
 
-  .sidebar-logo span {
-    color: var(--accent);
-  }
-
   .sidebar-subtitle {
     font-size: 13px;
     font-weight: 400;
-    color: rgba(255,255,255,0.4);
+    color: rgba(255,255,255,0.6);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     margin-bottom: 32px;
   }
 
+  .sidebar-client-url {
+    font-family: 'DM Mono', monospace;
+    font-size: 17px;
+    color: var(--accent);
+  }
+  
+  .sidebar-client-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+  
   .sidebar-thumb-wrap {
     border-radius: 8px;
     overflow: hidden;
@@ -93,36 +102,6 @@
     display: block;
     width: 100%;
     height: 100%;
-  }
-
-  .sidebar-client {
-    padding: 16px;
-    background: rgba(255,255,255,0.06);
-    border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.1);
-    margin-bottom: auto;
-  }
-
-  .sidebar-client-label {
-    font-size: 10px;
-    color: rgba(255,255,255,0.35);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  .sidebar-client-name {
-    font-size: 14px;
-    font-weight: 500;
-    color: #fff;
-    margin-bottom: 4px;
-  }
-
-  .sidebar-client-url {
-    font-family: 'DM Mono', monospace;
-    font-size: 15px;
-    color: var(--accent);
-    opacity: 0.9;
   }
 
   .sidebar-property {
@@ -205,12 +184,12 @@
   }
 
   .main-title {
-    font-family: 'Fraunces', serif;
-    font-size: 22px;
-    font-weight: 300;
-    font-style: italic;
-    color: var(--ink);
-    opacity: 0.6;
+    font-family: 'Arial', serif;
+    font-size: 36px;
+    letter-spacing: -1px;
+    font-weight: 600;
+    color: var(--brand);
+    opacity: 1;
   }
 
   .date-range {
@@ -246,7 +225,7 @@
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 3px;
+    height: 6px;
     border-radius: 16px 16px 0 0;
   }
 
@@ -259,13 +238,13 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 23px;
   }
 
   .card-title {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
     text-transform: uppercase;
     color: var(--muted);
   }
@@ -540,7 +519,7 @@
 <!-- SIDEBAR (desktop) -->
 <aside class="sidebar">
   <div class="sidebar-logo">Radi<span>ate</span></div>
-  <div class="sidebar-subtitle">Analytics Dashboard</div>
+  <div class="sidebar-subtitle">Analytics Dashboard from Omnicom Production</div>
 
   <div class="sidebar-thumb-label">Homepage Preview</div>
   <div class="sidebar-thumb-wrap">
@@ -549,8 +528,8 @@
 
   <div class="sidebar-client">
     <div class="sidebar-client-label">Client</div>
-    <div class="sidebar-client-name">Radiate</div>
-    <div class="sidebar-client-url">ProductName.com</div>
+    <div class="sidebar-client-name">Client Name</div>
+    <div class="sidebar-client-url">ProductURL.com</div>
   </div>
 
   <div class="sidebar-property">
@@ -586,13 +565,13 @@
 <main class="main">
 
   <div class="main-header">
-    <div class="main-title">Overview</div>
+    <div class="main-title">Product X</div>
     <div class="date-range" id="date-range">Loading…</div>
   </div>
 
   <div class="api-note">
     <span class="api-note-icon">ℹ</span>
-    <span>This dashboard connects to <strong>GA4 Property 428182000</strong> via the Google Analytics Data API. Data shown reflects live reporting. To authenticate with a real token, set <code>window.GA_ACCESS_TOKEN</code> before load.</span>
+    <span>This dashboard connects to <strong>GA4 Property 428182000</strong> via the Google Analytics Data API. To authenticate with a real token, set <code>window.GA_ACCESS_TOKEN</code> before load.</span>
   </div>
 
   <div class="metrics-grid" id="metrics-grid">
